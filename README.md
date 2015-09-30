@@ -1,26 +1,39 @@
-# dpr
-Set of utility/debugging php functions.
+# Dpr
+Set of utility/debugging PHP functions.
 
 ## Documentation
 ### Constants
-#### `DPR_DEVELOPER_IPS : string`
+#### `DPR_DEVELOPER_IPS`
+``define('DPR_DEVELOPER_IPS', '127.0.0.1|192.168.0.1')``
 List of IP-addresses separated with `'|'`, which should be considered as developer's IPs.
 
 ### Functions
-#### `dpr($var : any, ...)`
+#### `dpr`
+``dpr($var : any, ...);``
 Basic functionality. Prints variables provided as arguments and stops the script execution.
 
-#### `dprv($var : any, ...)`
-> -v for "var_dump"
+#### `dprv`
+``dprv($var : any, ...); // -v for "var_dump"``
 
-Same as ``dpr()``, but uses ``var_dump()`` instead of ``print_r()``
+Same as [``dpr()``](#dprvvar--any-), but uses ``var_dump()`` instead of ``print_r()``
 
-#### `dprs($var : any, ...)` 
-> -s for "silent"
+#### `dprs`
+``dprs($var : any, ...); // -s for "silent"``
 
-Executes ``dpr()`` only if ``$_SERVER['REMOTE_ADDR']`` is in ``DPR_DEVELOPER_IPS`` constant.
+Executes [``dpr()``](#dpr) only if ``$_SERVER['REMOTE_ADDR']`` is in [``DPR_DEVELOPER_IPS``](#dpr_developer_ips) constant (``is_developer() == true``).
 
-#### `dprt()`
-> -t for "trace"
+#### `dprt`
+``dprt(); //  -t for "trace"``
 
 Prints backtrace and stops the script execution.
+
+#### `dprb`
+``dprb(); // -b for "breakpoint"``
+
+Defines a breakpoint for [dprd()](#dprd) function.
+
+#### `dprd`
+``dprd($var : any, ...); // -d for something like "debug" or whatever``
+
+Triggers dpr() if breakpoint was defined with [dprb()](#dprb)
+
