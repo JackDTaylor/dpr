@@ -13,8 +13,7 @@ List of IP-addresses separated with `'|'`, which should be considered as develop
 Returns ``true`` if ``$_SERVER['REMOTE_ADDR']`` is in [``DPR_DEVELOPER_IPS``](#dpr_developer_ips) constant.
 
 #### `dpr`
-``dpr($var : any, ...);``
-
+``dpr($var : any, ...);``  
 Basic functionality. Prints variables provided as arguments and stops the script execution.
 
 #### `dprv`
