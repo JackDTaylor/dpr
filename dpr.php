@@ -1,6 +1,14 @@
 <?php
 if(!function_exists('_dpr')) {
 	/**
+	 * Use it for IPs you use for testing
+	 * @var string List of "|"-separated IPs
+	 */
+	if(!defined('DPR_DEVELOPER_IPS')) {
+		define('DPR_DEVELOPER_IPS', '127.0.0.1|192.168.0.1');
+	}
+	
+	/**
 	 * Checks whether user is developer or not
 	 * @return bool Returns TRUE if $_SERVER['REMOTE_ADDR'] is in DPR_DEVELOPER_IPS constant.
 	 */
