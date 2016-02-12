@@ -43,7 +43,7 @@ if(!function_exists('_dpr')) {
 			header('Content-type: text/plain; charset=utf-8');
 		} else {
 			echo '<style> * { overflow: hidden; position: static; } </style>';
-			echo '<pre style="position: fixed; overflow: auto; top: 0; left: 0; margin: 0; padding: 5px; box-sizing: border-box; width: 100%; height: 100%; background-color: #FFFFFF; color: #000000; font-size: 14px; font-family: Courier New; z-index: 1024768">';
+			echo '<pre style="position: fixed; overflow: auto; top: 0; left: 0; margin: 0; padding: 5px; box-sizing: border-box; width: 100%; height: 100%; background-color: #FFFFFF; color: #000000; font-size: 14px; line-height: 125%; font-family: Courier New; z-index: 2147483647">';
 		}
 
 		$called_at = debug_backtrace(false);
