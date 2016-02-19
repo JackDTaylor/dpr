@@ -69,7 +69,7 @@ if(!function_exists('_dpr')) {
 			$index = is_int($index) ? "Index $index" : $index;
 
 			echo "####### $index ", str_repeat('#', 69 - strlen($index)), PHP_EOL;
-			$function = is_bool($variable) ? '__echo_bool' : (is_null($variable) ? '__echo_null' : ($var_dump ? 'var_dump' : 'print_r'));
+			$function = is_bool($variable) ? '__echo_bool' : (is_null($variable) ? '__echo_null' : ($is_var_dump ? 'var_dump' : 'print_r'));
 			$function($variable);
 			echo PHP_EOL . PHP_EOL;
 		}
