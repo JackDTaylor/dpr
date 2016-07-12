@@ -1,4 +1,5 @@
 <?php
+
 if(!function_exists('_dpr')) {
 	/**
 	 * Use it for IPs you use for testing
@@ -20,9 +21,14 @@ if(!function_exists('_dpr')) {
 	}
 
 	/**
-	 * Internal functions for _dpr()
+	 * Internal function for _dpr()
 	 */
 	function __echo_null() { echo '[NULL]'; }
+
+	/**
+	 * Internal function for _dpr()
+	 * @param $variable
+	 */
 	function __echo_bool($variable) { echo $variable ? '[TRUE]' : '[FALSE]'; }
 
 	/**
@@ -30,7 +36,7 @@ if(!function_exists('_dpr')) {
 	 * @param $variables   array       List of mixed values to print
 	 * @param $is_var_dump boolean     If true, then var_dump() will be used instead of print_r()
 	 * @param $breakpoint  string      Breakpoint location for dprb()/dprd() functions
-	 * @return
+	 * @return null
 	 */
 	function _dpr(array $variables = array(), $is_var_dump = false, $breakpoint = null) {
 		if(ob_get_level()) {
@@ -42,8 +48,32 @@ if(!function_exists('_dpr')) {
 		if(!headers_sent()) {
 			header('Content-type: text/plain; charset=utf-8');
 		} else {
-			echo '<style> * { overflow: hidden; position: static; } </style>';
-			echo '<pre style="position: fixed; overflow: auto; top: 0; left: 0; margin: 0; padding: 5px; box-sizing: border-box; width: 100%; height: 100%; background-color: #FFFFFF; color: #000000; font-size: 14px; line-height: 125%; font-family: Courier New; z-index: 2147483647">';
+			echo '
+				<style>
+				* {
+					overflow: hidden; position: static;
+				}
+
+				#dprOutput {
+					position: fixed;
+					overflow: auto;
+					top: 0;
+					left: 0;
+					margin: 0;
+					padding: 5px;
+					box-sizing: border-box;
+					width: 100%;
+					height: 100%;
+					background-color: #FFFFFF;
+					color: #000000;
+					font-size: 14px;
+					line-height: 125%;
+					font-family: Courier New, monospace;
+					z-index: 2147483647;
+				}
+				</style>
+				<pre style="dprOutput">
+			';
 		}
 
 		$called_at = debug_backtrace(false);
@@ -73,6 +103,9 @@ if(!function_exists('_dpr')) {
 			$function($variable);
 			echo PHP_EOL . PHP_EOL;
 		}
+
+		echo '</pre>';
+
 		die();
 	}
 
@@ -85,6 +118,8 @@ if(!function_exists('_dpr')) {
 		if(is_developer()) {
 			return _dpr(func_get_args());
 		}
+
+		return null;
 	}
 
 	/**
@@ -109,7 +144,6 @@ if(!function_exists('_dpr')) {
 
 	/**
 	 * Prints backtrace and stops the script execution.
-	 * @return
 	 */
 	function dprt() {
 		$trace_result = array();
@@ -123,7 +157,6 @@ if(!function_exists('_dpr')) {
 
 	/**
 	 * Defines a breakpoint for dprd()
-	 * @return
 	 */
 	function dprb() {
 		$breakpoint_at = pos(debug_backtrace(false));
@@ -133,9 +166,9 @@ if(!function_exists('_dpr')) {
 
 	/**
 	 * Triggers dpr() if breakpoint was defined with dprb()
-	 * @param var1 mixed   Variable to print
-	 * @param _    mixed   [optional] Function supports any number of arguments
-	 * @return
+	 *
+	 * @internal param mixed $var1 Variable to print
+	 * @internal param mixed $_ [optional] Function supports any number of arguments
 	 */
 	function dprd() {
 		if(defined('__DPR_BREAKPOINT_POSITION')) {
