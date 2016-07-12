@@ -112,34 +112,30 @@ if(!function_exists('_dpr')) {
 	/**
 	 * -s for "silent"
 	 * Executes dpr() only if is_developer() equals true.
-	 * @return
 	 */
 	function dprs() {
 		if(is_developer()) {
-			return _dpr(func_get_args());
+			_dpr(func_get_args());
 		}
-
-		return null;
 	}
 
 	/**
 	 * Basic functionality. Prints variables provided as arguments and stops the script execution.
-	 * @param var1 mixed   Variable to print
-	 * @param _    mixed   [optional] Function supports any number of arguments
-	 * @return
+	 *
+	 * @internal param mixed $var1 Variable to print
+	 * @internal param mixed $_ [optional] Function supports any number of arguments
 	 */
 	function dpr() {
-		return _dpr(func_get_args());
+		_dpr(func_get_args());
 	}
 
 	/**
 	 * Same as dpr(), but uses var_dump() instead of print_r()
 	 * @param var1 mixed   Variable to print
 	 * @param _    mixed   [optional] Function supports any number of arguments
-	 * @return
 	 */
 	function dprv() {
-		return _dpr(func_get_args(), true);
+		_dpr(func_get_args(), true);
 	}
 
 	/**
