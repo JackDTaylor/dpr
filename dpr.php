@@ -8,6 +8,13 @@ if(!function_exists('_dpr')) {
 	if(!defined('DPR_DEVELOPER_IPS')) {
 		define('DPR_DEVELOPER_IPS', '127.0.0.1|192.168.0.1');
 	}
+
+	/**
+	 * You can disable check for IPs using this constant
+	 */
+	if(!defined('DPR_CHECK_DEVELOPER_IPS')) {
+		define('DPR_CHECK_DEVELOPER_IPS', true);
+	}
 	
 	/**
 	 * Checks whether user is developer or not
@@ -17,6 +24,7 @@ if(!function_exists('_dpr')) {
 		if(!defined('DPR_DEVELOPER_IPS')) {
 			return false;
 		}
+
 		return in_array($_SERVER['REMOTE_ADDR'], explode('|', DPR_DEVELOPER_IPS));
 	}
 
@@ -33,12 +41,17 @@ if(!function_exists('_dpr')) {
 
 	/**
 	 * Internal dpr() function.
+	 *
 	 * @param $variables   array       List of mixed values to print
 	 * @param $is_var_dump boolean     If true, then var_dump() will be used instead of print_r()
 	 * @param $breakpoint  string      Breakpoint location for dprb()/dprd() functions
-	 * @return null
+	 * @return mixed
 	 */
 	function _dpr(array $variables = array(), $is_var_dump = false, $breakpoint = null) {
+		if(DPR_CHECK_DEVELOPER_IPS && is_developer() == false) {
+			return pos($variables);
+		}
+
 		if(ob_get_level()) {
 			while(ob_get_level()) {
 				ob_end_clean();
@@ -110,13 +123,12 @@ if(!function_exists('_dpr')) {
 	}
 
 	/**
+	 * @deprecated
 	 * -s for "silent"
 	 * Executes dpr() only if is_developer() equals true.
 	 */
 	function dprs() {
-		if(is_developer()) {
-			_dpr(func_get_args());
-		}
+		_dpr(func_get_args());
 	}
 
 	/**
