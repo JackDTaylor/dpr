@@ -1,0 +1,12 @@
+{
+	"name": "jackdtaylor/package_name",
+	"description": "die(print_r()) helper functions",
+	"minimum-stability": "dev",
+	"license": "WTFPL",
+	"authors": [
+		{
+			"name": "Jack D. Taylor",
+			"email": "msec.nt@gmail.com"
+		}
+	]
+}
