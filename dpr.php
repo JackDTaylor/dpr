@@ -58,7 +58,10 @@ if(!function_exists('_dpr')) {
 			}
 		}
 
-		if(!headers_sent()) {
+
+		$html_mode = headers_sent();
+
+		if($html_mode === false) {
 			header('Content-type: text/plain; charset=utf-8');
 		} else {
 			echo '
@@ -117,7 +120,9 @@ if(!function_exists('_dpr')) {
 			echo PHP_EOL . PHP_EOL;
 		}
 
-		echo '</pre>';
+		if($html_mode === true) {
+			echo '</pre>';
+		}
 
 		die();
 	}
