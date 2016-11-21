@@ -4,10 +4,10 @@
 	"minimum-stability": "dev",
 	"license": "WTFPL",
 	"repositories": [
-	    {
+		{
 		"url": "https://github.com/JackDTaylor/dpr.git",
 		"type": "git"
-	    }
+		}
 	],
 	"authors": [
 		{
