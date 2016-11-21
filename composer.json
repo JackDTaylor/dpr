@@ -1,8 +1,14 @@
 {
-	"name": "jackdtaylor/package_name",
+	"name": "jackdtaylor/dpr",
 	"description": "die(print_r()) helper functions",
 	"minimum-stability": "dev",
 	"license": "WTFPL",
+	"repositories": [
+	    {
+		"url": "https://github.com/JackDTaylor/dpr.git",
+		"type": "git"
+	    }
+	],
 	"authors": [
 		{
 			"name": "Jack D. Taylor",
