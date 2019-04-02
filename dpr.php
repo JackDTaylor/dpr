@@ -75,7 +75,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 		if(is_developer() === false) {
 			return @pos($variables);
 		}
-		
+
 		if(ob_get_level()) {
 			while(ob_get_level()) {
 				ob_end_clean();
@@ -97,9 +97,10 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 		$exec_time = number_format($exec_time, 2, '.', '');
 
 		if(DPR_SHOW_MEMINFO === true) {
-			// Hey don't look at me that way!
+			// Hey don't look at me like that!
 			// Oh, well, okay, whatever.
 			/** @FIXME Refactoring needed */
+
 			$mem_limit = trim(ini_get('memory_limit'));
 
 			switch(strtolower($mem_limit[strlen($mem_limit)-1])) {
@@ -126,9 +127,6 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			$peak_real = __format_dpr_mem_number(memory_get_peak_usage(true)) . 'M';
 
 
-			$mpem = str_pad($mpem, 17, ' ', STR_PAD_RIGHT);
-			$mprl = str_pad($mprl, 17, ' ', STR_PAD_RIGHT);
-
 			$internal_encoding = mb_internal_encoding();
 			mb_internal_encoding(DPR_ENCODING);
 
@@ -137,7 +135,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			echo "$s          $s Current usage $s    Peak usage $s  Memory limit $s   Curr $s   Peak $s", PHP_EOL;
 			echo "$s  emalloc $s{$curr_emal} $s{$peak_emal} $s{$mem_limit} $s{$cep} $s{$pep} $s", PHP_EOL;
 			echo "$s     real $s{$curr_real} $s{$peak_real} $s{$mem_limit} $s{$crp} $s{$prp} $s", PHP_EOL;
-			echo ' ', str_repeat(chr(194).chr(175), 76), ' ', PHP_EOL;
+			echo ' ', str_repeat(chr(0xE2).chr(0x80).chr(0xBE), 76), ' ', PHP_EOL;
 
 			mb_internal_encoding($internal_encoding);
 		}
@@ -172,7 +170,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 	 * Basic functionality. Prints variables provided as arguments and stops the script execution.
 	 * @param var1 mixed   Variable to print
 	 * @param _    mixed   [optional] Function supports any number of arguments
-	 * @return
+	 * @return mixed
 	 */
 	function dpr() {
 		return _dpr(func_get_args());
@@ -182,7 +180,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 	 * Same as dpr(), but uses var_dump() instead of print_r()
 	 * @param var1 mixed   Variable to print
 	 * @param _    mixed   [optional] Function supports any number of arguments
-	 * @return
+	 * @return mixed
 	 */
 	function dprv() {
 		return _dpr(func_get_args(), true);
@@ -190,7 +188,6 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 
 	/**
 	 * Prints backtrace and stops the script execution.
-	 * @return
 	 */
 	function dprt() {
 		$trace_result = array();
@@ -204,7 +201,6 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 
 	/**
 	 * Defines a breakpoint for dprd()
-	 * @return
 	 */
 	function dprb() {
 		$breakpoint_at = pos(debug_backtrace(false));
@@ -216,12 +212,14 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 	 * Triggers dpr() if breakpoint was defined with dprb()
 	 * @param var1 mixed   Variable to print
 	 * @param _    mixed   [optional] Function supports any number of arguments
-	 * @return
+	 * @return mixed
 	 */
 	function dprd() {
 		if(defined('__DPR_BREAKPOINT_POSITION')) {
 			return _dpr(func_get_args(), false, __DPR_BREAKPOINT_POSITION);
 		}
+		
+		return func_get_arg(0);
 	}
 
 	class dprmStorage {
