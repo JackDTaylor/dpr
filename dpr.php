@@ -46,7 +46,8 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 		if(DPR_DEVELOPER_IPS === false) {
 			return true;
 		}
-		return in_array(explode(',', DPR_DEVELOPER_IPS), $_SERVER['REMOTE_ADDR']);
+
+		return in_array($_SERVER['REMOTE_ADDR'], explode(',', DPR_DEVELOPER_IPS));
 	}
 
 	/**
@@ -218,7 +219,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 		if(defined('__DPR_BREAKPOINT_POSITION')) {
 			return _dpr(func_get_args(), false, __DPR_BREAKPOINT_POSITION);
 		}
-		
+
 		return func_get_arg(0);
 	}
 
