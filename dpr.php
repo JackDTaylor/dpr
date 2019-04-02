@@ -47,7 +47,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			return true;
 		}
 
-		return in_array($_SERVER['REMOTE_ADDR'], explode(',', DPR_DEVELOPER_IPS));
+		return in_array($_SERVER['REMOTE_ADDR'], array_map('trim', explode(',', DPR_DEVELOPER_IPS)));
 	}
 
 	/**
