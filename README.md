@@ -51,11 +51,11 @@ Triggers [dpr()](#dpr) only if breakpoint was defined with [dprb()](#dprb)
 Prints all measures made with [dprmFrom()](#dprmFrom)/[dprmTo()](#dprmTo) and then executes [dpr()](#dpr) for passed arguments.
 
 #### `dprmFrom`
-``dprmFrom($key : string);``
+``dprmFrom($key : string);``  
 Starts execution time measure named as ``$key``.
 
 #### `dprmTo`
-``dprmTo($key : string);``
+``dprmTo($key : string);``  
 Ends execution time measure named as ``$key``.
 
 
