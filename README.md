@@ -18,8 +18,7 @@ Default encoding to send with ``header('Content-Type: text/plain; charset=<your 
   
 #### `$_SERVER['REQUEST_TIME_FLOAT']`
 ``$_SERVER['REQUEST_TIME_FLOAT'] = microtime(true);``  
-Optionally you can put this line to the very start of your execution flow to measure request execution time.
-
+Optionally you can put this line to the very start of your execution flow to measure request execution time.<br>
 If not present, ``dpr()`` will set it up as the time of ``include 'dpr.php';``.
 
 ### Functions
