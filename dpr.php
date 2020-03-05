@@ -11,7 +11,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 	 * @var string|boolean List of comma-separated IPs or false to disable this check
 	 */
 	if(!defined('DPR_DEVELOPER_IPS')) {
-		define('DPR_DEVELOPER_IPS', '127.0.0.1'); // Don't forget to change this to your IP or set it to false
+		define('DPR_DEVELOPER_IPS', false); // Don't forget to change this to your IP or set it to false
 	}
 
 	/**
@@ -102,7 +102,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			// Oh, well, okay, whatever.
 			/** @FIXME Refactoring needed */
 
-			$mem_limit = trim(ini_get('memory_limit'));
+			$mem_limit = (int)trim(ini_get('memory_limit'));
 
 			switch(strtolower($mem_limit[strlen($mem_limit)-1])) {
 				case 'g': $mem_limit *= 1024;
