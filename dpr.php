@@ -5,13 +5,30 @@
  */
 
 if(!function_exists('_dpr') && !function_exists('is_developer')) {
-	/**
-	 * Declares IP addresses allowed to see the debug info.
-	 * For users not matching this filter dpr() will simply return first passed argument and do nothing.
-	 * @var string|boolean List of comma-separated IPs or false to disable this check
-	 */
 	if(!defined('DPR_DEVELOPER_IPS')) {
+		/**
+		 * Declares IP addresses allowed to see the debug info.
+		 * For users not matching this filter dpr() will simply return first passed argument and do nothing.
+		 *
+		 * Supported formats:
+		 *
+		 *   **If value is FALSE, everyone will be considered a developer**
+		 *      define('DPR_DEVELOPER_IPS', false);
+		 *
+		 *   **Comma-separated list of IPs, spaces will be trimmed.**
+		 *      define('DPR_DEVELOPER_IPS', '12.34.56.78, 23.45.67.89, 23.56.78.90');
+		 *
+		 *   **NL-separated config with #-comments support:**
+		 *      define('DPR_DEVELOPER_IPS', "
+		 *        12.34.56.78 # Alice
+		 *        23.45.67.89 # Bob
+		 *        23.56.78.90 # Bob from home
+		 *      ");
+		 *
+		 * @var string|boolean List of IPs or false to disable this check
+		 */
 		define('DPR_DEVELOPER_IPS', false); // Don't forget to change this to your IP or set it to false
+		DPR_DEVELOPER_IPS;
 	}
 
 	/**
@@ -47,7 +64,11 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			return true;
 		}
 
-		return in_array($_SERVER['REMOTE_ADDR'], array_map('trim', explode(',', DPR_DEVELOPER_IPS)));
+		$developer_ips = DPR_DEVELOPER_IPS;
+		$developer_ips = preg_replace('/#.*?([\r\n]+)/s', ",", $developer_ips);
+		$developer_ips = array_filter(array_map('trim', explode(',', $developer_ips)));
+
+		return in_array($_SERVER['REMOTE_ADDR'], $developer_ips);
 	}
 
 	/**
