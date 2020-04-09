@@ -28,7 +28,6 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 		 * @var string|boolean List of IPs or false to disable this check
 		 */
 		define('DPR_DEVELOPER_IPS', false); // Don't forget to change this to your IP or set it to false
-		DPR_DEVELOPER_IPS;
 	}
 
 	/**
