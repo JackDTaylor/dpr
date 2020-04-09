@@ -22,7 +22,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 		 *      define('DPR_DEVELOPER_IPS', "
 		 *        12.34.56.78 # Alice
 		 *        23.45.67.89 # Bob
-		 *        23.56.78.90 # Bob from home
+		 *        34.56.78.90 # Bob from home
 		 *      ");
 		 *
 		 * @var string|boolean List of IPs or false to disable this check
