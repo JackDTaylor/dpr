@@ -9,6 +9,9 @@
 			"type": "git"
 		}
 	],
+	"autoload": {
+		"files": ["dpr.php"]
+	},
 	"authors": [
 		{
 			"name": "Jack D. Taylor",
