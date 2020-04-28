@@ -1,21 +1,22 @@
 {
 	"name": "jackdtaylor/dpr",
 	"description": "die(print_r()) helper functions",
-	"minimum-stability": "dev",
+	"keywords": ["log", "debug", "print_r", "var_dump"],
+	"homepage": "https://github.com/JackDTaylor/dpr",
 	"license": "WTFPL",
-	"repositories": [
-		{
-			"url": "https://github.com/JackDTaylor/dpr.git",
-			"type": "git"
-		}
-	],
+	"repositories": [{
+		"url": "https://github.com/JackDTaylor/dpr.git",
+		"type": "git"
+	}],
+	"authors": [{
+		"name": "Jack D. Taylor",
+		"email": "msec.nt@gmail.com",
+		"homepage": "https://github.com/JackDTaylor"
+	}],
 	"autoload": {
 		"files": ["dpr.php"]
 	},
-	"authors": [
-		{
-			"name": "Jack D. Taylor",
-			"email": "msec.nt@gmail.com"
-		}
-	]
+	"require": {
+		"php": ">=5.2.0"
+	}
 }
