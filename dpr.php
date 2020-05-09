@@ -209,6 +209,8 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 
 	/**
 	 * Prints backtrace and stops the script execution.
+	 * @param var1 mixed   Additional variable to print
+	 * @param _    mixed   [optional] Function supports any number of arguments
 	 */
 	function dprt() {
 		$trace_result = array();
@@ -217,7 +219,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			$trace_result[] = str_replace($_SERVER['DOCUMENT_ROOT'], '', $trace_call['file']) . ':' . $trace_call['line'];
 		}
 
-		dpr($trace_result);
+		dpr($trace_result, ...func_get_args());
 	}
 
 	/**
