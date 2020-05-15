@@ -184,6 +184,12 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			$function($variable);
 			echo PHP_EOL . PHP_EOL;
 		}
+		
+		// In some weird cases dpr's behavior of clearing all output buffers may lead to 
+		// shutdown functions (registered through register_shutdown_function()) not being called.
+		// This line solves the issue.
+		ob_start();
+		
 		die();
 	}
 
