@@ -97,11 +97,16 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			return @pos($variables);
 		}
 
+		// Clear all existing buffers
 		if(ob_get_level()) {
 			while(ob_get_level()) {
 				ob_end_clean();
 			}
 		}
+
+		// Start our own output buffer.
+		// This allows user to send headers in shutdown functions if needed
+		ob_start();
 
 		if(!headers_sent()) {
 			header('Content-type: text/plain; charset=' . DPR_ENCODING);
@@ -184,12 +189,7 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 			$function($variable);
 			echo PHP_EOL . PHP_EOL;
 		}
-		
-		// In some weird cases dpr's behavior of clearing all output buffers may lead to 
-		// shutdown functions (registered through register_shutdown_function()) not being called.
-		// This line solves the issue.
-		ob_start();
-		
+
 		die();
 	}
 
