@@ -4,6 +4,7 @@
 	"keywords": ["log", "debug", "print_r", "var_dump"],
 	"homepage": "https://github.com/JackDTaylor/dpr",
 	"license": "WTFPL",
+	"minimum-stability": "stable",
 	"repositories": [{
 		"url": "https://github.com/JackDTaylor/dpr.git",
 		"type": "git"
