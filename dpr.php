@@ -125,11 +125,13 @@ if(!function_exists('_dpr') && !function_exists('is_developer')) {
 		if(DPR_SHOW_MEMINFO === true) {
 			// Hey don't look at me like that!
 			// Oh, well, okay, whatever.
-			/** @FIXME Refactoring needed */
+			/** TODO: Refactoring needed */
 
-			$mem_limit = (int)trim(ini_get('memory_limit'));
+			$mem_limit = trim(ini_get('memory_limit'));
+			$mem_limit_unit = is_string($mem_limit) ? strtolower($mem_limit[strlen($mem_limit)-1]) : '';
+			$mem_limit = (int)$mem_limit;
 
-			switch(strtolower($mem_limit[strlen($mem_limit)-1])) {
+			switch($mem_limit_unit) {
 				case 'g': $mem_limit *= 1024;
 				case 'm': $mem_limit *= 1024;
 				case 'k': $mem_limit *= 1024;
