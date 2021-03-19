@@ -1,70 +1,96 @@
 <?php
 use JackDTaylor\Dpr\Dpr;
 
-Dpr::init();
+Dpr::getInstance()->init();
 
-/**
- * Checks whether user is developer or not
- * @return bool Returns TRUE if $_SERVER['REMOTE_ADDR'] is in DPR_DEVELOPER_IPS constant.
- */
-function is_developer() {
-	return Dpr::isDeveloper();
+if(!function_exists('is_developer')) {
+	/**
+	 * Checks whether user is developer or not
+	 *
+	 * @return bool Returns TRUE if $_SERVER['REMOTE_ADDR'] is in DPR_DEVELOPER_IPS constant.
+	 */
+	function is_developer() {
+		return Dpr::getInstance()->isDeveloper();
+	}
 }
 
-/**
- * Basic functionality. Prints variables provided as arguments and stops the script execution.
- * @param var1 mixed   Variable to print
- * @param _    mixed   [optional] Function supports any number of arguments
- * @return mixed
- */
-function dpr() {
-    return Dpr::dump(func_get_args());
+if(!function_exists('dpr')) {
+	/**
+	 * Basic functionality. Prints variables provided as arguments and stops the script execution.
+	 *
+	 * @param mixed var1   Variable to print
+	 * @param mixed _      [optional] Function supports any number of arguments
+	 * @return mixed
+	 */
+	function dpr() {
+		return Dpr::getInstance()->dump(func_get_args());
+	}
 }
 
-/**
- * Same as dpr(), but uses var_dump() instead of print_r()
- * @param var1 mixed   Variable to print
- * @param _    mixed   [optional] Function supports any number of arguments
- * @return mixed
- */
-function dprv() {
-    return Dpr::dump(func_get_args(), true);
+if(!function_exists('dprv')) {
+	/**
+	 * Same as dpr(), but uses var_dump() instead of print_r()
+	 *
+	 * @param mixed var1   Variable to print
+	 * @param mixed _      [optional] Function supports any number of arguments
+	 * @return mixed
+	 */
+	function dprv() {
+		// Remove filename since it makes no sense in this context
+		if(ini_get("xdebug.overload_var_dump") == 2) {
+			ini_set("xdebug.overload_var_dump", 1);
+		}
+
+		return Dpr::getInstance()
+			->setPrinter(Dpr::VAR_DUMP)
+			->setForceHtml(ini_get("xdebug.overload_var_dump") > 0 || ini_get('xdebug.mode') == 'develop')
+			->dump(func_get_args());
+	}
 }
 
-/**
- * Prints backtrace and stops the script execution.
- * @param var1 mixed   Additional variable to print
- * @param _    mixed   [optional] Function supports any number of arguments
- */
-function dprt() {
-    $trace_result = array();
+if(!function_exists('dprt')) {
+	/**
+	 * Prints backtrace and stops the script execution.
+	 *
+	 * @param mixed var1   Additional variable to print
+	 * @param mixed _      [optional] Function supports any number of arguments
+	 */
+	function dprt() {
+		$trace_result = [];
 
-    foreach(debug_backtrace(false) as $trace_call) {
-        $trace_result[] = str_replace($_SERVER['DOCUMENT_ROOT'], '', $trace_call['file'] ?? '<unknown>') . ':' . ($trace_call['line'] ?? '0');
-    }
+		foreach(debug_backtrace(false) as $trace_call) {
+			$trace_result[] = str_replace($_SERVER['DOCUMENT_ROOT'], '', $trace_call['file'] ?? '<unknown>') . ':' . ($trace_call['line'] ?? '0');
+		}
 
-    dpr($trace_result, ...func_get_args());
+		dpr(implode(PHP_EOL, $trace_result), ...func_get_args());
+	}
 }
 
-/**
- * Defines a breakpoint for dprd()
- */
-function dprb() {
-    $breakpoint_at = pos(debug_backtrace(false));
+if(!function_exists('dprb')) {
+	/**
+	 * Defines a breakpoint for dprd()
+	 */
+	function dprb() {
+		/** @noinspection PhpVoidFunctionResultUsedInspection */
+		$breakpoint_at = pos(debug_backtrace(false));
 
-    define('__DPR_BREAKPOINT_POSITION', $breakpoint_at['file'] . ':' . $breakpoint_at['line']);
+		Dpr::getInstance()->setBreakpoint($breakpoint_at['file'] . ':' . $breakpoint_at['line']);
+	}
 }
 
-/**
- * Triggers dpr() if breakpoint was defined with dprb()
- * @param mixed var1   Variable to print
- * @param mixed _      [optional] Function supports any number of arguments
- * @return mixed
- */
-function dprd() {
-    if(Dpr::hasBreakpoint()) {
-        return Dpr::dump(func_get_args(), false);
-    }
+if(!function_exists('dprd')) {
+	/**
+	 * Triggers dpr() if breakpoint was defined with dprb()
+	 *
+	 * @param mixed var1   Variable to print
+	 * @param mixed _      [optional] Function supports any number of arguments
+	 * @return mixed
+	 */
+	function dprd() {
+		if(Dpr::getInstance()->hasBreakpoint()) {
+			return dpr(...func_get_args());
+		}
 
-    return func_get_arg(0);
+		return func_get_arg(0);
+	}
 }
