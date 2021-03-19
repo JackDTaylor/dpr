@@ -97,3 +97,23 @@ if(!function_exists('dprd')) {
 		return func_get_arg(0);
 	}
 }
+
+if(!function_exists('dprc')) {
+	/**
+	 * Collects items to print them all eventually
+	 * If called without arguments, prints previously collected items
+	 *
+	 * @param mixed item Item to collect
+	 * @param mixed key  [optional] Key for this item
+	 * @return mixed
+	 */
+	function dprc($item = null, $key = null) {
+		// Keep func_num_args() value in Dpr::collect()
+		switch(func_num_args()) {
+			case 1: return Dpr::getInstance()->collect($item);
+			case 2: return Dpr::getInstance()->collect($item, $key);
+		}
+
+		return Dpr::getInstance()->dumpCollected();
+	}
+}

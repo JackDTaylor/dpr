@@ -59,6 +59,8 @@ class Dpr {
 
 	protected $forceHtml = false;
 
+	protected $collectedItems = [];
+
 	public function init() {
 		// If there's no $_SERVER['REQUEST_TIME_FLOAT'], then let's measure it at least somehow.
 		if(!isset($_SERVER['REQUEST_TIME_FLOAT'])) {
@@ -131,6 +133,16 @@ class Dpr {
 
 	public function hasBreakpoint() {
 		return is_null($this->breakpoint) == false;
+	}
+
+	public function collect($item, $key = null) {
+		if(func_num_args() == 1) {
+			$this->collectedItems[] = $item;
+		} else {
+			$this->collectedItems[$key] = $item;
+		}
+
+		return $item;
 	}
 
 	protected function formatNumber($val) {
@@ -315,5 +327,9 @@ class Dpr {
 		}
 
 		die();
+	}
+
+	public function dumpCollected() {
+		return $this->dump($this->collectedItems);
 	}
 }
