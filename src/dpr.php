@@ -62,7 +62,10 @@ if(!function_exists('dprt')) {
 			$trace_result[] = str_replace($_SERVER['DOCUMENT_ROOT'], '', $trace_call['file'] ?? '<unknown>') . ':' . ($trace_call['line'] ?? '0');
 		}
 
-		dpr(implode(PHP_EOL, $trace_result), ...func_get_args());
+		$arguments = func_get_args();
+		array_unshift($arguments, implode(PHP_EOL, $trace_result));
+
+		Dpr::getInstance()->dump($arguments);
 	}
 }
 
@@ -88,7 +91,7 @@ if(!function_exists('dprd')) {
 	 */
 	function dprd() {
 		if(Dpr::getInstance()->hasBreakpoint()) {
-			return dpr(...func_get_args());
+			return Dpr::getInstance()->dump(func_get_args());
 		}
 
 		return func_get_arg(0);
