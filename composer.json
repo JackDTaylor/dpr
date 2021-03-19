@@ -15,7 +15,12 @@
 		"homepage": "https://github.com/JackDTaylor"
 	}],
 	"autoload": {
-		"files": ["dpr.php"]
+        "files": [
+            "src/dpr.php"
+        ],
+        "psr-4": {
+            "JackDTaylor\\": "src/JackDTaylor/"
+        }
 	},
 	"require": {
 		"php": ">=5.2.0"
