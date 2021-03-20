@@ -208,9 +208,10 @@ class Dpr {
 	 * TODO: Heavy refactoryng needed
 	 *
 	 * @param array $variables
+	 * @param int $called_at_offset
 	 * @noinspection PhpMissingBreakStatementInspection
 	 */
-	public function dump(array $variables) {
+	public function dump(array $variables, $called_at_offset = 0) {
 		if($this->isDeveloper() === false) {
 			return @pos($variables);
 		}
@@ -246,7 +247,7 @@ class Dpr {
 		}
 
 		$called_at = debug_backtrace(false);
-		$called_at = $called_at[1];
+		$called_at = $called_at[1 + $called_at_offset];
 
 		// header
 		$exec_time = ((microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) * 1000);
@@ -330,6 +331,6 @@ class Dpr {
 	}
 
 	public function dumpCollected() {
-		return $this->dump($this->collectedItems);
+		return $this->dump($this->collectedItems, 1);
 	}
 }
