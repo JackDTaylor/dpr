@@ -237,7 +237,7 @@ class Dpr {
 				* { overflow: hidden; position: static; }
 				div#dpr { position: fixed; overflow: auto; top: 0; left: 0; margin: 0; padding: 1em 8px 8px; box-sizing: border-box; width: 100%; height: 100%; background-color: #FFFFFF; color: #000000; font-size: 13px; line-height: normal; font-family: monospace; z-index: 2147483647; }
 				pre { outline: none; margin: 0; }
-				pre.dpr { margin-top: 1.15em; }
+				pre.dpr { margin-top: 1.15em; white-space: pre-wrap; }
 				pre.dpr:first-child { margin-top: 0; }
 			</style>
 			';
