@@ -77,7 +77,7 @@ if(!function_exists('dprb')) {
 		/** @noinspection PhpVoidFunctionResultUsedInspection */
 		$breakpoint_at = pos(debug_backtrace(false));
 
-		Dpr::getInstance()->setBreakpoint($breakpoint_at['file'] . ':' . $breakpoint_at['line']);
+		Dpr::getInstance()->setBreakpoint($breakpoint_at['file'], $breakpoint_at['line']);
 	}
 }
 

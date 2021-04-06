@@ -30,6 +30,6 @@ class Measure {
         $data = static::$storage;
         ksort($data);
 
-        Dpr::dump(array_merge([ $data ], $args));
+        Dpr::getInstance()->dump(array_merge([ $data ], $args));
     }
 }
