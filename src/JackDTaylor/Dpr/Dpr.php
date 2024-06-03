@@ -102,7 +102,7 @@ class Dpr {
 			$developer_ips = array_filter(array_map('trim', explode(',', $developer_ips)));
 		}
 
-		return in_array($_SERVER['REMOTE_ADDR'], $developer_ips);
+		return in_array($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1', $developer_ips);
 	}
 
 	public function setDeveloperIps($developer_ips) {
